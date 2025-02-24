@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class Block : MonoBehaviour
+public class Block : MonoBehaviour, IInteraction
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public void Interact()
+    public void Interact(GameObject target)
     {
-        Debug.Log("Interact");
+        Debug.Log("Interacting with block: " + this.name);
     }
 }

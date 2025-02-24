@@ -14,6 +14,8 @@ public class GridManager : MonoBehaviour
     
     [SerializeField] private Block _interactionBlock;
     
+    [SerializeField] private GridData _gridData;
+    
     public void Initialize()
     {
         var gridPosition = GetGridPosition(_interactionBlock.transform.position);
@@ -42,11 +44,6 @@ public class GridManager : MonoBehaviour
         _nextInteractionBlock = _grid[gridPosition];
     }
 
-    public void InteractWithBlock()
-    {
-        _nextInteractionBlock?.Interact();
-    }
-
     void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
@@ -64,5 +61,7 @@ public class GridManager : MonoBehaviour
             Gizmos.DrawLine(start, end);
         }
     }
+
+    public float GetCellSize() { return _cellSize; }
 
 }
