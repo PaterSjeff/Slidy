@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
@@ -9,7 +10,8 @@ public class GridManager : MonoBehaviour
     private int _height = 10;
     private float _cellSize = 1;
 
-    private Dictionary<Vector2Int, Block> _grid = new Dictionary<Vector2Int, Block>();
+    private Dictionary<Vector2Int, Interactable> _interactions = new Dictionary<Vector2Int, Interactable>();
+    [SerializeField] private List<Interactable> _interactionList = new List<Interactable>();
     [CanBeNull] private Block _nextInteractionBlock;
     
     [SerializeField] private Block _interactionBlock;
@@ -18,8 +20,16 @@ public class GridManager : MonoBehaviour
     
     public void Initialize()
     {
-        var gridPosition = GetGridPosition(_interactionBlock.transform.position);
-        _grid.Add(gridPosition, _interactionBlock);
+        CollectInteractions();
+    }
+    
+    private void CollectInteractions()
+    {
+        foreach (var interaction in _interactionList)
+        {
+            var gridPosition = GetGridPosition(interaction.transform.position);
+            _interactions.Add(gridPosition, interaction);
+        }
     }
     
     public Vector2Int GetGridPosition(Vector3 worldPosition)
@@ -38,10 +48,12 @@ public class GridManager : MonoBehaviour
         return new Vector3(gridPosition.x * _cellSize, 0, gridPosition.y * _cellSize);
     }
 
-    public void SetNextInteractionBlock(Vector3 position)
+    public bool TryGetInteractable(Vector3 position, out Interactable interactable)
     {
         var gridPosition = GetGridPosition(position);
-        _nextInteractionBlock = _grid[gridPosition];
+        var hasInteraction = _interactions.TryGetValue(gridPosition, out interactable);
+
+        return hasInteraction;
     }
 
     void OnDrawGizmos()

@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private GridManager _gridManager;
     [SerializeField] private LayerMask _gridLayerMask;
+    [SerializeField] private Transform _rayCastOrigin;
 
     [SerializeField] private float _moveSpeed = 5f;
 
@@ -16,16 +17,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W)) Move(Vector3.forward);
-        if (Input.GetKeyDown(KeyCode.D)) Move(Vector3.right);
-        if (Input.GetKeyDown(KeyCode.S)) Move(Vector3.back);
-        if (Input.GetKeyDown(KeyCode.A)) Move(Vector3.left);
+        if (Input.GetKeyDown(KeyCode.W)) TryMove(Vector3.forward);
+        if (Input.GetKeyDown(KeyCode.D)) TryMove(Vector3.right);
+        if (Input.GetKeyDown(KeyCode.S)) TryMove(Vector3.back);
+        if (Input.GetKeyDown(KeyCode.A)) TryMove(Vector3.left);
     }
 
-    private void Move(Vector3 direction)
+    private void TryMove(Vector3 direction)
     {
         // Create a ray starting from the player's current position going in the given direction.
-        Ray ray = new Ray(transform.position, direction);
+        Ray ray = new Ray(_rayCastOrigin.position, direction);
         RaycastHit hit;
 
         // Send the raycast. Make sure your grid colliders are on the layer specified by gridLayerMask.
@@ -40,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 moveEndPoint = _gridManager.GetWorldPosition(hitPoint);
 
             // Split movement into tiles and loop through each tile
-            StartCoroutine(MoveThroughTiles(moveStartPoint, moveEndPoint, direction));
+            StartCoroutine(Move(moveStartPoint, moveEndPoint, direction));
         }
         else
         {
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveThroughTiles(Vector3 startPoint, Vector3 endPoint, Vector3 direction)
+    private IEnumerator Move(Vector3 startPoint, Vector3 endPoint, Vector3 direction)
     {
         Vector3 currentPosition = startPoint;
         float distance = Vector3.Distance(startPoint, endPoint);
@@ -66,18 +67,27 @@ public class PlayerMovement : MonoBehaviour
             yield return transform.DOMove(nextTilePosition, durationPerStep).SetEase(Ease.Linear).WaitForCompletion();
 
             // Check for hazards on this tile
-            Vector2Int gridPosition = _gridManager.GetGridPosition(nextTilePosition);
+            bool hasInteraction = _gridManager.TryGetInteractable(nextTilePosition, out Interactable interactable);
+            if (hasInteraction)
+            {
+                interactable.Interact();
+            }
 
             // Move to the next tile position
             currentPosition = nextTilePosition;
         }
 
         // After movement is complete, interact with the block
-        FinishMovement();
+        FinishMovement(endPoint, direction);
     }
 
-    private void FinishMovement()
+    private void FinishMovement(Vector3 endPoint, Vector3 direction)
     {
-        //_gridManager.InteractWithBlock();
+        var targetWallPosition = endPoint + direction;
+        bool hasInteraction = _gridManager.TryGetInteractable(targetWallPosition, out Interactable interactable);
+        if (hasInteraction)
+        {
+            interactable.Interact();
+        }
     }
 }

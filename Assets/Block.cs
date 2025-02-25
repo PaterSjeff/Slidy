@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Block : MonoBehaviour, IInteraction
+public class Block : Interactable
 {
-    public void Interact(GameObject target)
+    public override void Interact()
     {
-        Debug.Log("Interacting with block: " + this.name);
+        base.Interact();
     }
 }

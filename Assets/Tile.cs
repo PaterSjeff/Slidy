@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class Tile : MonoBehaviour, IInteraction
+public class Tile : Interactable
 {
-    public void Interact(GameObject target)
+    public override void Interact()
     {
-        // Example of interaction; you can extend this with specific behavior
-        Debug.Log("Interacting with tile: " + this.name);
+        base.Interact();
     }
 }
