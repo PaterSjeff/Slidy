@@ -5,14 +5,19 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     private GridManager _gridManager;
+    private Player _player;
+    private PlayerAnimations _playerAnimations;
+    
     [SerializeField] private LayerMask _gridLayerMask;
     [SerializeField] private Transform _rayCastOrigin;
 
     [SerializeField] private float _moveSpeed = 5f;
 
-    public void Initialize(GridManager gridManager)
+    public void Initialize(GridManager gridManager, Player player, PlayerAnimations playerAnimations)
     {
         _gridManager = gridManager;
+        _player = player;
+        _playerAnimations = playerAnimations;
     }
 
     void Update()
@@ -28,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
         // Create a ray starting from the player's current position going in the given direction.
         Ray ray = new Ray(_rayCastOrigin.position, direction);
         RaycastHit hit;
+        
+        _playerAnimations.SetDirection(direction);
 
         // Send the raycast. Make sure your grid colliders are on the layer specified by gridLayerMask.
         if (Physics.Raycast(ray, out hit, 100f, _gridLayerMask))
@@ -70,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
             bool hasInteraction = _gridManager.TryGetInteractable(nextTilePosition, out Interactable interactable);
             if (hasInteraction)
             {
-                interactable.Interact();
+                interactable.Interact(_player);
             }
 
             // Move to the next tile position
@@ -87,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         bool hasInteraction = _gridManager.TryGetInteractable(targetWallPosition, out Interactable interactable);
         if (hasInteraction)
         {
-            interactable.Interact();
+            interactable.Interact(_player);
         }
     }
 }

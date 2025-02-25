@@ -14,10 +14,6 @@ public class GridManager : MonoBehaviour
     [SerializeField] private List<Interactable> _interactionList = new List<Interactable>();
     [CanBeNull] private Block _nextInteractionBlock;
     
-    [SerializeField] private Block _interactionBlock;
-    
-    [SerializeField] private GridData _gridData;
-    
     public void Initialize()
     {
         CollectInteractions();
