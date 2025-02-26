@@ -20,4 +20,9 @@ public class Interactable : MonoBehaviour
     public Damagable GetDamagable() { return _damagable; }
     
     public bool GetIsSolid() { return _isSolid; }
+
+    private void OnDestroy()
+    {
+        GameEvents.ObjectDestroyed(this);
+    }
 }

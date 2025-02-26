@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float _moveSpeed = 5f;
 
+    private bool _isMoving;
     public void Initialize(GridManager gridManager, Player player, PlayerAnimations playerAnimations)
     {
         _gridManager = gridManager;
@@ -22,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (_isMoving) { return; }
+        
         if (Input.GetKeyDown(KeyCode.W)) TryMove(Vector3.forward);
         if (Input.GetKeyDown(KeyCode.D)) TryMove(Vector3.right);
         if (Input.GetKeyDown(KeyCode.S)) TryMove(Vector3.back);
@@ -58,6 +61,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Move(Vector3 startPoint, Vector3 endPoint, Vector3 direction)
     {
+        _isMoving = true;
+        
         Vector3 currentPosition = startPoint;
         float distance = Vector3.Distance(startPoint, endPoint);
         float step = _gridManager.GetCellSize();  // Use grid cell size for step
@@ -99,5 +104,7 @@ public class PlayerMovement : MonoBehaviour
             
             interactable?.Interact(_player);
         }
+        
+        _isMoving = false;
     }
 }

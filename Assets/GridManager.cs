@@ -18,7 +18,23 @@ public class GridManager : MonoBehaviour
     {
         CollectInteractions();
     }
-    
+
+    private void OnEnable()
+    {
+        GameEvents.OnObjectDestroyed += HandleObjectDestroyed;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnObjectDestroyed += HandleObjectDestroyed;
+    }
+    void HandleObjectDestroyed(Interactable obj)
+    {
+        var gridPosition = GetGridPosition(obj.transform.position);
+
+        _interactions.Remove(gridPosition);
+    }
+
     private void CollectInteractions()
     {
         foreach (var interaction in _interactionList)
@@ -72,8 +88,5 @@ public class GridManager : MonoBehaviour
 
     public float GetCellSize() { return _cellSize; }
 
-    private void Update()
-    {
-        
-    }
+    
 }
