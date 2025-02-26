@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-public class TreasureChest : InteractableListener
+public class Toggler : InteractableListener
 {
-    [SerializeField] private Animation _animation;
-    [SerializeField] private string _openChestClip;
-    [SerializeField] private string _closeChestClip;
+    [SerializeField] [CanBeNull] private Animation _animation;
+    [SerializeField] [CanBeNull] private string _openChestClip;
+    [SerializeField] [CanBeNull] private string _closeChestClip;
     
     [SerializeField] private bool _useOnce = false;
     
@@ -43,7 +43,7 @@ public class TreasureChest : InteractableListener
     private void Open()
     {
         _isOpen = true;
-        _animation.Play(_openChestClip);
+        _animation?.Play(_openChestClip);
         
         _onOpen?.Invoke();
     }
@@ -51,7 +51,7 @@ public class TreasureChest : InteractableListener
     private void Close()
     {
         _isOpen = false;
-        _animation.Play(_closeChestClip);
+        _animation?.Play(_closeChestClip);
         
         _onClose?.Invoke();
     }

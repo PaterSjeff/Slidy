@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Button : InteractableListener
 {
-    [SerializeField] TreasureChest _chest;
+    [SerializeField] Toggler _chest;
     
     protected override void Interact(Player player)
     {

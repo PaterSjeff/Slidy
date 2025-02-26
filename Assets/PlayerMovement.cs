@@ -94,7 +94,10 @@ public class PlayerMovement : MonoBehaviour
         bool hasInteraction = _gridManager.TryGetInteractable(targetWallPosition, out Interactable interactable);
         if (hasInteraction)
         {
-            interactable.Interact(_player);
+            var damagable = interactable.GetDamagable();
+            if (damagable != null) { damagable.DealDamage(); }
+            
+            interactable?.Interact(_player);
         }
     }
 }

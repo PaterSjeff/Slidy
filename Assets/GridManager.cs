@@ -72,4 +72,8 @@ public class GridManager : MonoBehaviour
 
     public float GetCellSize() { return _cellSize; }
 
+    private void Update()
+    {
+        
+    }
 }
