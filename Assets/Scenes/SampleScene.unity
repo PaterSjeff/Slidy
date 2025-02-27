@@ -1425,6 +1425,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6398962085742018747, guid: 2c65b85391502af419023151f819a608, type: 3}
+      propertyPath: _isCollectible
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7254651942770968755, guid: 2c65b85391502af419023151f819a608, type: 3}
       propertyPath: m_Name
       value: Pickup Sword Variant
@@ -2298,6 +2302,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2140814638 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 68861468533573312, guid: 2c65b85391502af419023151f819a608, type: 3}
+  m_PrefabInstance: {fileID: 1073074407}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d4267298e35d442bee80dea99149b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &257130424696304163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2632,7 +2647,7 @@ PrefabInstance:
     - target: {fileID: 5901521375485383287, guid: b77b63668e130164cac33d1a1df6898c, type: 3}
       propertyPath: '_interactionList.Array.data[6]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2140814638}
     - target: {fileID: 6696624855717357240, guid: b77b63668e130164cac33d1a1df6898c, type: 3}
       propertyPath: m_Name
       value: GameManager
