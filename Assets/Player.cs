@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Initialize(GridManager gridManager)
     {
-        _playerMovement.Initialize(gridManager, this, _playerAnimations);
+        _playerMovement.Initialize(gridManager, this, _playerAnimations, _inventory);
     }
 
     public Health GetHealth()

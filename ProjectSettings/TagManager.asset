@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Solid
   - Tile
+  - Damagable
   layers:
   - Default
   - TransparentFX

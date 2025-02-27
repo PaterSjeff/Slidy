@@ -1,12 +1,14 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using UnityEditor.Build;
 
 public class PlayerMovement : MonoBehaviour
 {
     private GridManager _gridManager;
     private Player _player;
     private PlayerAnimations _playerAnimations;
+    private Inventory _inventory;
     
     [SerializeField] private LayerMask _gridLayerMask;
     [SerializeField] private Transform _rayCastOrigin;
@@ -14,11 +16,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
 
     private bool _isMoving;
-    public void Initialize(GridManager gridManager, Player player, PlayerAnimations playerAnimations)
+    public void Initialize(GridManager gridManager, Player player, PlayerAnimations playerAnimations, Inventory inventory)
     {
         _gridManager = gridManager;
         _player = player;
         _playerAnimations = playerAnimations;
+        _inventory = inventory;
     }
 
     void Update()
@@ -80,9 +83,15 @@ public class PlayerMovement : MonoBehaviour
 
             // Check for hazards on this tile
             bool hasInteraction = _gridManager.TryGetInteractable(nextTilePosition, out Interactable interactable);
+            
             if (hasInteraction)
             {
-                interactable.Interact(_player);
+                bool dealtWithDamagable = DealtWithDamagable(interactable);
+
+                if (!dealtWithDamagable)
+                {
+                    interactable.Interact(_player);
+                }
             }
 
             // Move to the next tile position
@@ -97,14 +106,28 @@ public class PlayerMovement : MonoBehaviour
     {
         var targetWallPosition = endPoint + direction;
         bool hasInteraction = _gridManager.TryGetInteractable(targetWallPosition, out Interactable interactable);
+        
         if (hasInteraction)
         {
-            var damagable = interactable.GetDamagable();
-            if (damagable != null) { damagable.DealDamage(); }
-            
-            interactable?.Interact(_player);
+            bool dealtWithDamagable = DealtWithDamagable(interactable);
+
+            if (!dealtWithDamagable)
+            {
+                interactable?.Interact(_player);
+            }
         }
         
         _isMoving = false;
+    }
+
+    private bool DealtWithDamagable(Interactable interactable)
+    {
+        if (interactable.CompareTag("Damagable"))
+        {
+            var damagable = interactable.GetComponent<Damagable>();
+            return _inventory.TryDealWithDamagable(damagable);
+        }
+        
+        return false;
     }
 }

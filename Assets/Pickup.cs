@@ -5,14 +5,15 @@ using UnityEngine.Events;
 public class Pickup : InteractableListener
 {
     [SerializeField] private int _pickupAmount;
-    
+    [SerializeField] bool _isCollectible = true;
     [SerializeField] [CanBeNull] private UnityEvent _onPickup;
     [SerializeField] [CanBeNull] private Item _pickupItem;
+    [SerializeField] ItemTypes _itemType;
     protected override void Interact(Player player)
     {
-        Inventory inventory = player.GetInventory();
+        var inventory = player.GetInventory();
 
-        if (_pickupItem != null)
+        if (!_isCollectible)
         {
             inventory.AddItem(_pickupItem);
         }

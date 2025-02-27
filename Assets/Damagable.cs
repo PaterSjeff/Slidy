@@ -2,9 +2,15 @@ using UnityEngine;
 
 public class Damagable : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public void DealDamage()
+    [SerializeField] private Item _damagableItem;
+    public bool TryToKill(Item item)
     {
-        Destroy(this.gameObject);
+        if (item == _damagableItem)
+        {
+            Destroy(this.gameObject);
+            return true;
+        }
+        
+        return false;
     }
 }

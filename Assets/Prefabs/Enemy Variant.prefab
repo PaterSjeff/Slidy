@@ -74,6 +74,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3621778568533399088, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: m_TagString
+      value: Damagable
+      objectReference: {fileID: 0}
     - target: {fileID: 7263941066126564717, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -125,6 +129,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3621778568533399088, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4379327542763886433}
+    - targetCorrespondingSourceObject: {fileID: 3621778568533399088, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3185429441035046906}
   m_SourcePrefab: {fileID: 100100000, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
 --- !u!114 &2144657463277697964 stripped
 MonoBehaviour:
@@ -160,3 +167,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactable: {fileID: 2144657463277697964}
+--- !u!114 &3185429441035046906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7427530844045475945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6b03b31833b8a8409889f78f6b263d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damagableItem: {fileID: 878885922679304621, guid: f51d20ec0307c494db415f56f0d2a489, type: 3}

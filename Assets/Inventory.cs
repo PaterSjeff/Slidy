@@ -16,6 +16,12 @@ public class Inventory : MonoBehaviour
         _currentItem = item;
     }
 
+    public bool TryDealWithDamagable(Damagable damagable)
+    {
+        Debug.Log(_currentItem.name + " is trying to deal with " + damagable.name);
+        return damagable.TryToKill(_currentItem);
+    }
+
     private void DropItem()
     {
         
