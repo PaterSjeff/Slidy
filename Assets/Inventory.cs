@@ -18,8 +18,9 @@ public class Inventory : MonoBehaviour
 
     public bool TryDealWithDamagable(Damagable damagable)
     {
-        Debug.Log(_currentItem.name + " is trying to deal with " + damagable.name);
-        return damagable.TryToKill(_currentItem);
+        bool usedItem = false;
+        _currentItem?.UseItem(damagable, out usedItem);
+        return usedItem;
     }
 
     private void DropItem()

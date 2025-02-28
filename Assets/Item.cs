@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public virtual void UseItem()
+    [SerializeField] protected ItemTypes _itemType;
+    public virtual void UseItem(Damagable damagable, out bool usedItem)
     {
         Debug.Log("Item is used");
+        usedItem = false;
     }
 }
