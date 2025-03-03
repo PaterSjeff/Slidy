@@ -55,7 +55,11 @@ PrefabInstance:
     - target: {fileID: 7905163616986510800, guid: 5827850d02d255e4790fb01d68384329, type: 3}
       propertyPath: _pickupItem
       value: 
-      objectReference: {fileID: 878885922679304621, guid: f51d20ec0307c494db415f56f0d2a489, type: 3}
+      objectReference: {fileID: 7313846357239904920, guid: f51d20ec0307c494db415f56f0d2a489, type: 3}
+    - target: {fileID: 7905163616986510800, guid: 5827850d02d255e4790fb01d68384329, type: 3}
+      propertyPath: _pickupItemPrefab
+      value: 
+      objectReference: {fileID: 7240390562231421322, guid: f51d20ec0307c494db415f56f0d2a489, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

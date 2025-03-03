@@ -8,6 +8,7 @@ public class Pickup : InteractableListener
     [SerializeField] bool _isCollectible = true;
     [SerializeField] [CanBeNull] private UnityEvent _onPickup;
     [SerializeField] [CanBeNull] private Item _pickupItem;
+    [SerializeField] [CanBeNull] private GameObject _pickupItemPrefab;
     [SerializeField] ItemTypes _itemType;
     protected override void Interact(Player player)
     {
@@ -15,7 +16,7 @@ public class Pickup : InteractableListener
 
         if (!_isCollectible)
         {
-            inventory.AddItem(_pickupItem);
+            inventory.AddItem(_pickupItem, _pickupItemPrefab);
         }
         else
         {
