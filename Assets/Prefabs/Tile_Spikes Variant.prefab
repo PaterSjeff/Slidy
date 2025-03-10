@@ -63,6 +63,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4171111338414757890, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3068680986901181470}
+    - targetCorrespondingSourceObject: {fileID: 4171111338414757890, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1711548033320273638}
   m_SourcePrefab: {fileID: 100100000, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
 --- !u!1 &2371741912619697958 stripped
 GameObject:
@@ -82,6 +85,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactable: {fileID: 4950309285655185749}
+--- !u!114 &1711548033320273638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2371741912619697958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7b1adfa3bb90b346b6989c13ec29e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactable: {fileID: 4950309285655185749}
+  _animation: {fileID: 1598344673536597853}
+  _openChestClip: Spikes hide
+  _closeChestClip: Spikes show
+  _useOnce: 0
+  _onOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  _onClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &4059301191809572935 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2404172269433372515, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
@@ -157,10 +183,36 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ed6b32b73f91be14d9864e49a71c4298, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1598344673536597853}
   m_SourcePrefab: {fileID: 100100000, guid: ed6b32b73f91be14d9864e49a71c4298, type: 3}
 --- !u!4 &6297621072518881224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ed6b32b73f91be14d9864e49a71c4298, type: 3}
   m_PrefabInstance: {fileID: 5831912489658218531}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6642374401711981938 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ed6b32b73f91be14d9864e49a71c4298, type: 3}
+  m_PrefabInstance: {fileID: 5831912489658218531}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &1598344673536597853
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6642374401711981938}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 757fc62308b937b43bf04e8e87c397e1, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: ff7849fc78d2c5646bbbf6daac14c301, type: 2}
+  - {fileID: 7400000, guid: 757fc62308b937b43bf04e8e87c397e1, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
