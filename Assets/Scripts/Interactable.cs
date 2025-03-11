@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
+    
     [CanBeNull] public Action<Player> OnInteract;
     [SerializeField] private bool _isSolid = false;
     [SerializeField] [CanBeNull] private Damagable _damagable = null;

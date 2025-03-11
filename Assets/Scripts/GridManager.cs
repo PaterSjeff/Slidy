@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
+    
     private int _width = 10;
     private int _height = 10;
     private float _cellSize = 1;

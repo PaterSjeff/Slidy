@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    
     [SerializeField] protected ItemTypes _itemType;
     public virtual void UseItem(Damagable damagable, out bool usedItem)
     {

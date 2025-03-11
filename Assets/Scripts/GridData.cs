@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "GridData", menuName = "ScriptableObjects/GridData", order = 1)]
 public class GridData : ScriptableObject
 {
+    
     private Dictionary<Vector2Int, GameObject> _solidData = new Dictionary<Vector2Int, GameObject>();
     private Dictionary<Vector2Int, GameObject> _floorData = new Dictionary<Vector2Int, GameObject>();
     

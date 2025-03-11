@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    
     [SerializeField] private GridManager _gridManager;
     [SerializeField] Player _playerPrefab;
     [SerializeField] Transform _playerSpawnPoint;

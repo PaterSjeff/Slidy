@@ -52,15 +52,7 @@ public class LevelLoader : MonoBehaviour
             Debug.LogError("No level JSON file assigned!");
             return;
         }
-
-        // Destroy the existing level container if it exists
-        if (_levelContainer != null)
-        {
-            Destroy(_levelContainer);
-        }
-
-        // Create a new level container
-        _levelContainer = new GameObject("LevelContainer");
+        
         _levelContainer.transform.position = Vector3.zero;
 
         // Clear the namedObjects dictionary to avoid stale references

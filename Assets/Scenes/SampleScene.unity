@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b69e897e903c44cb694940d8615996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelJsonFile: {fileID: 0}
+  _levelJsonFile: {fileID: 4900000, guid: 15cf58728dbf75a4dadbb5d06f58eedc, type: 3}
   _wallPrefab: {fileID: 3621778568533399088, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
   _doorPrefab: {fileID: 6615525355812964347, guid: f0111760f610b3f4a91829bec08c9a6c, type: 3}
   _leverPrefab: {fileID: 4132477057702986027, guid: b7dba5dbe2cb10b4b8686df41655f3c9, type: 3}

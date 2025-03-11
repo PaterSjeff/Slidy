@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    
     [SerializeField] private int _coins;
     [SerializeField] [CanBeNull] private Item _currentItem;
     [SerializeField] Transform _itemPosition;
