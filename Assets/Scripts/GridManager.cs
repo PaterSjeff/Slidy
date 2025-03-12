@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    
+
     private int _width = 10;
     private int _height = 10;
     private float _cellSize = 1;
@@ -14,7 +14,9 @@ public class GridManager : MonoBehaviour
     private Dictionary<Vector2Int, Interactable> _interactions = new Dictionary<Vector2Int, Interactable>();
     [SerializeField] private List<Interactable> _interactionList = new List<Interactable>();
     [CanBeNull] private Block _nextInteractionBlock;
-    
+
+    private PlayerSpawner _spawner;
+
     public void Initialize()
     {
         CollectInteractions();
@@ -23,17 +25,26 @@ public class GridManager : MonoBehaviour
     private void OnEnable()
     {
         GameEvents.OnObjectDestroyed += HandleObjectDestroyed;
+        GameEvents.OnObjectSpawned += HandleObjectSpawned;
     }
 
     private void OnDisable()
     {
-        GameEvents.OnObjectDestroyed += HandleObjectDestroyed;
+        GameEvents.OnObjectDestroyed -= HandleObjectDestroyed;
+        GameEvents.OnObjectSpawned -= HandleObjectSpawned;
     }
     void HandleObjectDestroyed(Interactable obj)
     {
         var gridPosition = GetGridPosition(obj.transform.position);
 
         _interactions.Remove(gridPosition);
+    }
+
+    void HandleObjectSpawned(Interactable obj)
+    {
+        var gridPosition = GetGridPosition(obj.transform.position);
+        _interactions.Add(gridPosition, obj);
+        _interactionList.Add(obj);
     }
 
     private void CollectInteractions()
@@ -44,7 +55,7 @@ public class GridManager : MonoBehaviour
             _interactions.Add(gridPosition, interaction);
         }
     }
-    
+
     public Vector2Int GetGridPosition(Vector3 worldPosition)
     {
         return new Vector2Int((int)worldPosition.x, (int)worldPosition.z);
@@ -89,5 +100,5 @@ public class GridManager : MonoBehaviour
 
     public float GetCellSize() { return _cellSize; }
 
-    
+
 }

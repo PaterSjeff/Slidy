@@ -4,22 +4,17 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private LevelDoor _levelDoor;
 
     private void Start()
     {
-        Initialize();
+        GameEvents.OnSpawnPlayer += SpawnPlayer;
     }
-
-    private void Initialize()
+    private Player SpawnPlayer(Player playerPrefab)
     {
-        SpawnPlayer();
-    }
+        Player player = Instantiate(playerPrefab, transform);
+        _levelDoor.TriggerSequence(player.gameObject);
 
-    private void SpawnPlayer()
-    {
-        var player = Instantiate(_playerPrefab, transform);
-        _levelDoor.TriggerSequence(player);
+        return player;
     }
 }
