@@ -17,20 +17,20 @@ public class GameManager : MonoBehaviour
     {
         _gridManager.Initialize();
 
-        _player = SpawnPlayer();
+        //_player = SpawnPlayer();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!_player && !_isSpawningPlayer)
+        /*if (!_player && !_isSpawningPlayer)
         {
             _isSpawningPlayer = true;
             StartCoroutine(RespawnPlayer());
-        }
+        }*/
     }
 
-    private Player SpawnPlayer()
+    /*private Player SpawnPlayer()
     {
         var player = Instantiate(_playerPrefab, _playerSpawnPoint.position, Quaternion.identity);
         player.Initialize(_gridManager);
@@ -42,5 +42,5 @@ public class GameManager : MonoBehaviour
 
         _player = SpawnPlayer();
         _isSpawningPlayer = false;
-    }
+    }*/
 }

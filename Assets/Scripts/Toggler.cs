@@ -1,8 +1,7 @@
 using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
+
 
 public class Toggler : InteractableListener
 {
@@ -29,7 +28,7 @@ public class Toggler : InteractableListener
         Toggle();
     }
     
-    private void Toggle()
+    protected void Toggle()
     {
         if (_isOpen)
         {
@@ -41,7 +40,7 @@ public class Toggler : InteractableListener
         }
     }
 
-    private void Open()
+    protected void Open()
     {
         _isOpen = true;
         _animation?.Play(_openChestClip);
@@ -49,7 +48,7 @@ public class Toggler : InteractableListener
         _onOpen?.Invoke();
     }
 
-    private void Close()
+    protected void Close()
     {
         _isOpen = false;
         _animation?.Play(_closeChestClip);
