@@ -1,17 +1,18 @@
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class Room : MonoBehaviour
 {
     private Dictionary<Vector2Int, Interactable> _interactions = new Dictionary<Vector2Int, Interactable>();
     [SerializeField] private List<Interactable> _interactionList = new List<Interactable>();
-    
-    private GridManager _gridManager;
-    
+
+    [SerializeField] private GridManager _gridManager;
+
     public void Initialize(GridManager gridManager)
     {
         _gridManager = gridManager;
-        
+
         CollectInteractions();
     }
 
@@ -36,10 +37,12 @@ public class Room : MonoBehaviour
     void HandleObjectSpawned(Interactable obj)
     {
         var gridPosition = _gridManager.GetGridPosition(obj.transform.position);
-        _interactions.Add(gridPosition, obj);
+
+        if (!_interactions.TryAdd(gridPosition, obj)) { return; }
         _interactionList.Add(obj);
     }
 
+    [Button]
     private void CollectInteractions()
     {
         foreach (var interaction in _interactionList)

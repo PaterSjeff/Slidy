@@ -4,34 +4,42 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    public Transform playerTransform;
-    private Dictionary<Vector2, GameObject> _roomPrefabs;
-    private Vector2 _currentRoomCoords;
-    private GameObject _currentRoom;
+    public Transform _playerTransform;
+    private Dictionary<Vector2Int, Room> _roomPrefabs;
+    private Vector2Int _currentRoomCoords;
+    private Room _currentRoom;
 
-    public List<RoomData> roomData = new List<RoomData>();
+    private GridManager _gridManager;
 
-    void Start()
+    public List<RoomData> _roomData = new List<RoomData>();
+
+    public void Initialize(GridManager gridManager)
     {
-        
+        _gridManager = gridManager;
+
+        PopulateDictionary();
+
+        LoadInitialRoom(new Vector2Int(0, 0));
     }
 
     [Button]
     private void PopulateDictionary()
     {
-        _roomPrefabs = new Dictionary<Vector2, GameObject>();
-        foreach (var data in roomData)
+        _roomPrefabs = new Dictionary<Vector2Int, Room>();
+        foreach (var data in _roomData)
         {
             if (data._roomPrefab != null)
             {
                 _roomPrefabs[data._roomCoordinate] = data._roomPrefab;
             }
         }
+
+        Debug.Log(_roomPrefabs.Count + " in the dictionary");
     }
 
     public void TeleportPlayer(Vector2 directionOffset)
     {
-        Vector2 nextRoomCoords = _currentRoomCoords + directionOffset;
+        Vector2Int nextRoomCoords = _currentRoomCoords;
 
         if (_currentRoom != null)
         {
@@ -40,7 +48,7 @@ public class RoomManager : MonoBehaviour
 
         if (_roomPrefabs.ContainsKey(nextRoomCoords))
         {
-            GameObject newRoom = Instantiate(_roomPrefabs[nextRoomCoords]);
+            Room newRoom = Instantiate(_roomPrefabs[nextRoomCoords]);
             _currentRoom = newRoom;
             _currentRoomCoords = nextRoomCoords;
 
@@ -50,7 +58,7 @@ public class RoomManager : MonoBehaviour
             Transform entryPoint = _currentRoom.transform.Find(entryPointName);
             if (entryPoint != null)
             {
-                playerTransform.position = entryPoint.position;
+                _playerTransform.position = entryPoint.position;
             }
         }
         else
@@ -59,15 +67,17 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    private void LoadInitialRoom(Vector2 coords)
+    private void LoadInitialRoom(Vector2Int coords)
     {
+        Debug.Log($"Loading room {coords} and it {_roomPrefabs.Count}");
         _currentRoom = Instantiate(_roomPrefabs[coords]);
         _currentRoomCoords = coords;
+        _currentRoom.Initialize(_gridManager);
         // Set initial player position, e.g., at a default entry point
         Transform entryPoint = _currentRoom.transform.Find("CenterEntry");
         if (entryPoint != null)
         {
-            playerTransform.position = entryPoint.position;
+            _playerTransform.position = entryPoint.position;
         }
     }
 

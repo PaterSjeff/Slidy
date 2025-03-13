@@ -8,15 +8,15 @@ public class Toggler : InteractableListener
     [SerializeField] [CanBeNull] private Animation _animation;
     [SerializeField] [CanBeNull] private string _openChestClip;
     [SerializeField] [CanBeNull] private string _closeChestClip;
-    
+
     [SerializeField] private bool _useOnce = false;
-    
-    private bool _usedOnce = false;
-    private bool _isOpen = false;
-    
-    [SerializeField][CanBeNull] public UnityEvent _onOpen;
-    [SerializeField][CanBeNull] public UnityEvent _onClose;
-    
+
+    protected bool _usedOnce = false;
+    protected bool _isOpen = false;
+
+    [SerializeField] [CanBeNull] public UnityEvent _onOpen;
+    [SerializeField] [CanBeNull] public UnityEvent _onClose;
+
     protected override void Interact(Player player)
     {
         if (_useOnce)
@@ -27,7 +27,7 @@ public class Toggler : InteractableListener
 
         Toggle();
     }
-    
+
     protected void Toggle()
     {
         if (_isOpen)
@@ -44,7 +44,7 @@ public class Toggler : InteractableListener
     {
         _isOpen = true;
         _animation?.Play(_openChestClip);
-        
+
         _onOpen?.Invoke();
     }
 
@@ -52,7 +52,7 @@ public class Toggler : InteractableListener
     {
         _isOpen = false;
         _animation?.Play(_closeChestClip);
-        
+
         _onClose?.Invoke();
     }
 

@@ -78,6 +78,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Damagable
       objectReference: {fileID: 0}
+    - target: {fileID: 5229696223997750773, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: _isInteractable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7263941066126564717, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -180,3 +184,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damagableItem: {fileID: 878885922679304621, guid: f51d20ec0307c494db415f56f0d2a489, type: 3}
+  _damagableItemType: 0

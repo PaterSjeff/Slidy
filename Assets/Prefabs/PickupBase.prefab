@@ -81,7 +81,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4171111338414757890, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
       propertyPath: m_Name
-      value: ItemBase
+      value: PickupBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754226317840946801, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
+      propertyPath: _isInteractable
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -130,7 +134,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactable: {fileID: 3858955221416670123}
   _pickupAmount: 1
+  _isCollectible: 1
   _onPickup:
     m_PersistentCalls:
       m_Calls: []
   _pickupItem: {fileID: 0}
+  _pickupItemPrefab: {fileID: 0}
+  _itemType: 0

@@ -10,7 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3621778568533399088, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
       propertyPath: m_Name
-      value: Chest Variant
+      value: Block_Chest Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5229696223997750773, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: _isInteractable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5229696223997750773, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
       propertyPath: _onInteract.m_PersistentCalls.m_Calls.Array.size
@@ -113,6 +117,13 @@ MonoBehaviour:
   _animation: {fileID: 4807039751960843991}
   _openChestClip: open
   _closeChestClip: close
+  _useOnce: 0
+  _onOpen:
+    m_PersistentCalls:
+      m_Calls: []
+  _onClose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4866483095702780654 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5229696223997750773, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}

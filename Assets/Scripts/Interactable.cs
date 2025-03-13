@@ -9,6 +9,7 @@ public class Interactable : MonoBehaviour
     [CanBeNull] public Action<Player> OnInteract;
     [SerializeField] private bool _isSolid = false;
     [SerializeField] [CanBeNull] private Damagable _damagable = null;
+    [SerializeField] protected bool _isInteractable = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public virtual void Interact(Player player)
@@ -29,6 +30,6 @@ public class Interactable : MonoBehaviour
 
     private void Start()
     {
-        GameEvents.ObjectSpawned(this);
+        if (_isInteractable) { GameEvents.ObjectSpawned(this); }
     }
 }

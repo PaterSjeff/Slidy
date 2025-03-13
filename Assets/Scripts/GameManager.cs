@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
 
     [SerializeField] private GridManager _gridManager;
+    [SerializeField] private RoomManager _roomManager;
+
     [SerializeField] Player _playerPrefab;
     [SerializeField] Transform _playerSpawnPoint;
 
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         _gridManager.Initialize();
+        _roomManager.Initialize(_gridManager);
     }
 
     void Start()

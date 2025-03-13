@@ -140,6 +140,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile_Lever Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6754226317840946801, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
+      propertyPath: _isInteractable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1195612510734652867, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}

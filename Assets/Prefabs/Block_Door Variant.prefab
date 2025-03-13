@@ -354,6 +354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block_Door Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4866483095702780654, guid: 115dae9040caae5469b25937cde85233, type: 3}
+      propertyPath: _isInteractable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8058090370430421622, guid: 115dae9040caae5469b25937cde85233, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7
