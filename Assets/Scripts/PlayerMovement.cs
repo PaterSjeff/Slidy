@@ -48,10 +48,16 @@ public class PlayerMovement : MonoBehaviour
             var startPoint = transform.position;
             var hitPoint = hit.point;
             hitPoint -= direction / 2; // Adjust for grid center
-
+            var distance = Vector3.Distance(startPoint, hitPoint);
+            
+            if (distance < 1) { return; }
+            
             // Get the world positions for the tiles to move through
             Vector3 moveStartPoint = _gridManager.GetWorldPosition(startPoint);
             Vector3 moveEndPoint = _gridManager.GetWorldPosition(hitPoint);
+            var raylength = Vector3.Distance(_rayCastOrigin.transform.position, hit.point);
+            
+            Debug.Log(moveStartPoint + " " + moveEndPoint + "with a ray length of " + raylength);
 
             // Split movement into tiles and loop through each tile
             StartCoroutine(Move(moveStartPoint, moveEndPoint, direction));

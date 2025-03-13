@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using NaughtyAttributes;
+using UnityEditor;
 using UnityEngine.Serialization;
 
 public class LevelLoader : MonoBehaviour
@@ -75,7 +76,10 @@ public class LevelLoader : MonoBehaviour
             }
 
             Vector3 pos = new Vector3(obj.position[0] - 1, 0, obj.position[1] - 1);
-            GameObject instance = Instantiate(prefabMap[obj.type], pos, Quaternion.identity, _levelContainer.transform);
+            //GameObject instance = Instantiate(prefabMap[obj.type], pos, Quaternion.identity, _levelContainer.transform);
+            GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefabMap[obj.type], _levelContainer.transform);
+            instance.transform.position = pos;
+            //TODO need to do rotation for some things.
 
             // Store named objects for connections
             if (!string.IsNullOrEmpty(obj.name))
