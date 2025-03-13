@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
             hitPoint -= direction / 2; // Adjust for grid center
 
             // Get the world positions for the tiles to move through
-            Vector3 moveStartPoint = startPoint;
+            Vector3 moveStartPoint = _gridManager.GetWorldPosition(startPoint);
             Vector3 moveEndPoint = _gridManager.GetWorldPosition(hitPoint);
 
             // Split movement into tiles and loop through each tile
