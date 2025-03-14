@@ -32,4 +32,6 @@ public class Interactable : MonoBehaviour
     {
         if (_isInteractable) { GameEvents.ObjectSpawned(this); }
     }
+    
+    public bool GetIsInteractable() { return _isInteractable; }
 }

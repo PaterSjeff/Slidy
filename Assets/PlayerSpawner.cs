@@ -10,7 +10,7 @@ public class PlayerSpawner : MonoBehaviour
     {
         GameEvents.OnSpawnPlayer += SpawnPlayer;
     }
-    private Player SpawnPlayer(Player playerPrefab)
+    public Player SpawnPlayer(Player playerPrefab)
     {
         Player player = Instantiate(playerPrefab);
         _levelDoor.TriggerSequence(player.gameObject);

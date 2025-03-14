@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -7,7 +8,10 @@ public class Room : MonoBehaviour
     private Dictionary<Vector2Int, Interactable> _interactions = new Dictionary<Vector2Int, Interactable>();
     [SerializeField] private List<Interactable> _interactionList = new List<Interactable>();
 
-    [SerializeField] private GridManager _gridManager;
+    private GridManager _gridManager;
+
+    [ShowNonSerializedField] private PlayerSpawner _entrance;
+    [ShowNonSerializedField] private Interactable _exit;
 
     public void Initialize(GridManager gridManager)
     {
@@ -39,13 +43,28 @@ public class Room : MonoBehaviour
         _interactionList.Add(obj);
     }
 
+    public Player SpawnPlayer(Player player)
+    {
+        var temp = _entrance.SpawnPlayer(player);
+        return temp;
+    }
+
     [Button]
     private void CollectInteractions()
     {
-        foreach (var interaction in _interactionList)
+        _interactionList.Clear();
+        
+        foreach (Transform child in transform)
         {
-            var gridPosition = _gridManager.GetGridPosition(interaction.transform.position);
-            _interactions.Add(gridPosition, interaction);
+            if (!child.TryGetComponent<Interactable>(out var interactableObj)) { continue; }
+            if (!interactableObj.GetIsInteractable()) { continue; }
+            _interactionList.Add(interactableObj);
+
+            if (interactableObj.CompareTag("Entrance"))
+            {
+                _entrance = interactableObj.GetComponent<PlayerSpawner>();
+            }
+            if (interactableObj.CompareTag("Exit")) { _exit = interactableObj; }
         }
     }
 }

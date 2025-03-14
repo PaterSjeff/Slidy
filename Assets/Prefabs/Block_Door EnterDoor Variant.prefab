@@ -114,6 +114,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block_Door EnterDoor Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6615525355812964347, guid: f0111760f610b3f4a91829bec08c9a6c, type: 3}
+      propertyPath: m_TagString
+      value: Entrance
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8064150315289980239, guid: f0111760f610b3f4a91829bec08c9a6c, type: 3}
     m_RemovedGameObjects: []

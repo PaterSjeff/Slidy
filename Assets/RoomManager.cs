@@ -33,12 +33,17 @@ public class RoomManager : MonoBehaviour
     {
         _gridManager = gridManager;
 
-        PopulateDictionary();
+        //PopulateDictionary();
 
         LoadInitialRoom(new Vector2Int(0, 0));
     }
 
-    [Button]
+    public Player SpawnPlayer(Player player)
+    {
+        var temp = _currentRoom.SpawnPlayer(player);
+        return temp;
+    }
+    
     private void PopulateDictionary()
     {
         _roomPrefabs = new Dictionary<Vector2Int, Room>();
@@ -107,7 +112,7 @@ public class RoomManager : MonoBehaviour
 
     private Vector3 ConvertRoomCoordsToWorldCoords(Vector2Int coords)
     {
-        var roomOffset = 12;
+        var roomOffset = 13;
         return new Vector3(coords.x * roomOffset, 0, coords.y * roomOffset);
     }
 
@@ -118,5 +123,16 @@ public class RoomManager : MonoBehaviour
         if (direction == new Vector2(1, 0)) return "WestEntry";
         if (direction == new Vector2(-1, 0)) return "EastEntry";
         return "CenterEntry"; // Fallback
+    }
+
+    [Button]
+    private void LoadAllRooms()
+    {
+        foreach (var room in _roomData)
+        {
+            var temp = Instantiate(room._roomPrefab);
+            temp.transform.position = ConvertRoomCoordsToWorldCoords(room._roomCoordinate);
+            //_roomPrefabs.Add(room._roomCoordinate, temp);
+        }
     }
 }

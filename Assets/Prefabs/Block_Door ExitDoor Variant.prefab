@@ -184,6 +184,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Block_Door ExitDoor Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6615525355812964347, guid: f0111760f610b3f4a91829bec08c9a6c, type: 3}
+      propertyPath: m_TagString
+      value: Exit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
