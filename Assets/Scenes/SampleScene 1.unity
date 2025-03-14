@@ -809,6 +809,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8842817959239836029, guid: b77b63668e130164cac33d1a1df6898c, type: 3}
+      propertyPath: _roomData.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842817959239836029, guid: b77b63668e130164cac33d1a1df6898c, type: 3}
+      propertyPath: _roomData.Array.data[1]._roomPrefab
+      value: 
+      objectReference: {fileID: 5987237942331315526, guid: fe67744b0535fe14c9a95158aa1a8694, type: 3}
+    - target: {fileID: 8842817959239836029, guid: b77b63668e130164cac33d1a1df6898c, type: 3}
+      propertyPath: _roomData.Array.data[1]._roomCoordinate.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

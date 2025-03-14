@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -12,6 +13,21 @@ public class RoomManager : MonoBehaviour
     private GridManager _gridManager;
 
     public List<RoomData> _roomData = new List<RoomData>();
+
+    private void OnEnable()
+    {
+        GameEvents.OnExitLevel += OnExitLevel;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnExitLevel -= OnExitLevel;
+    }
+
+    private void OnExitLevel(Vector2Int exitDirection)
+    {
+        LoadRoom(exitDirection);
+    }
 
     public void Initialize(GridManager gridManager)
     {
@@ -79,6 +95,20 @@ public class RoomManager : MonoBehaviour
         {
             _playerTransform.position = entryPoint.position;
         }
+    }
+
+    private void LoadRoom(Vector2Int exitDirection)
+    {
+        _currentRoomCoords += exitDirection;
+        _currentRoom = Instantiate(_roomPrefabs[_currentRoomCoords]);
+        _currentRoom.transform.position = ConvertRoomCoordsToWorldCoords(_currentRoomCoords);
+        _currentRoom.Initialize(_gridManager);
+    }
+
+    private Vector3 ConvertRoomCoordsToWorldCoords(Vector2Int coords)
+    {
+        var roomOffset = 12;
+        return new Vector3(coords.x * roomOffset, 0, coords.y * roomOffset);
     }
 
     private string GetEntryPointName(Vector2 direction)

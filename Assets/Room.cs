@@ -12,14 +12,11 @@ public class Room : MonoBehaviour
     public void Initialize(GridManager gridManager)
     {
         _gridManager = gridManager;
-
-        CollectInteractions();
-    }
-
-    private void OnEnable()
-    {
+        
         GameEvents.OnObjectDestroyed += HandleObjectDestroyed;
         GameEvents.OnObjectSpawned += HandleObjectSpawned;
+
+        CollectInteractions();
     }
 
     private void OnDisable()
