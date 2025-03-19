@@ -12,6 +12,7 @@ public static class GameEvents
 
     public delegate Player SpawnPlayerDelegate(Player playerPrefab);
     public static event SpawnPlayerDelegate OnSpawnPlayer;
+    public static event Action<Vector2Int> OnChangeLevel;
 
     public static void ObjectDestroyed(Interactable obj)
     {
@@ -38,6 +39,4 @@ public static class GameEvents
         // This will call the delegate and return the spawned player.
         return OnSpawnPlayer?.Invoke(playerPrefab);
     }
-
-    
 }

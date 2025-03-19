@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    public Vector2Int Coords { get; set; }
+    
+    private Dictionary<Vector2Int, Transform> _entryPoints = new Dictionary<Vector2Int, Transform>();
+    
+    
     private Dictionary<Vector2Int, Interactable> _interactions = new Dictionary<Vector2Int, Interactable>();
     [SerializeField] private List<Interactable> _interactionList = new List<Interactable>();
 
@@ -19,8 +24,6 @@ public class Room : MonoBehaviour
         
         GameEvents.OnObjectDestroyed += HandleObjectDestroyed;
         GameEvents.OnObjectSpawned += HandleObjectSpawned;
-
-        CollectInteractions();
     }
 
     private void OnDisable()
@@ -43,7 +46,7 @@ public class Room : MonoBehaviour
         _interactionList.Add(obj);
     }
 
-    public Player SpawnPlayer(Player player)
+    public Player SpawnPlayer(Player player, Vector2Int spawnCoords)
     {
         var temp = _entrance.SpawnPlayer(player);
         return temp;
@@ -53,6 +56,7 @@ public class Room : MonoBehaviour
     private void CollectInteractions()
     {
         _interactionList.Clear();
+        _entryPoints.Clear();
         
         foreach (Transform child in transform)
         {
