@@ -4,7 +4,7 @@ using DG.Tweening;
 
 public class LevelDoor : Toggler
 {
-    [SerializeField] private Vector2Int doorDirection;
+    [SerializeField] private Vector2Int _entryPointCoord;
     [SerializeField] private Transform _entrancePoint;
     [SerializeField] private Transform _exitPoint;
 
@@ -22,8 +22,8 @@ public class LevelDoor : Toggler
         var tweenSequence = player.transform.DOMove(_exitPoint.position, 0.5f);
         tweenSequence.OnComplete(Close);
     }
-    
-    private Player SpawnPlayer(Player playerPrefab)
+
+    public Player SpawnPlayer(Player playerPrefab)
     {
         Player player = Instantiate(playerPrefab);
         TriggerSequence(player.gameObject);
@@ -33,6 +33,11 @@ public class LevelDoor : Toggler
 
     public void GoToLevel()
     {
-        GameEvents.ExitLevel(doorDirection);
+        GameEvents.ExitLevel(_entryPointCoord);
+    }
+
+    public Vector2Int GetEntryPointCoord()
+    {
+        return _entryPointCoord;
     }
 }
