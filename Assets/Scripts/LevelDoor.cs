@@ -8,11 +8,24 @@ public class LevelDoor : Toggler
     [SerializeField] private Transform _entrancePoint;
     [SerializeField] private Transform _exitPoint;
 
-    private GameObject player;
+    [SerializeField] private Block _leaveCollider;
+    
+    private Player _player;
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _leaveCollider.OnInteract += ExitLevel;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        _leaveCollider.OnInteract += ExitLevel;
+    }
     public void Initialize()
     {
-        GameEvents.OnSpawnPlayer += SpawnPlayer;
+
     }
 
     public void TriggerSequence(GameObject player)
@@ -23,16 +36,21 @@ public class LevelDoor : Toggler
         tweenSequence.OnComplete(Close);
     }
     
-    private Player SpawnPlayer(Player playerPrefab)
+    public void SpawnPlayer(Player player)
     {
-        Player player = Instantiate(playerPrefab);
+        player.gameObject.SetActive(true);
         TriggerSequence(player.gameObject);
-
-        return player;
     }
 
-    public void GoToLevel()
+    private void ExitLevel(Player player)
     {
+        //TODO Might need to make going out prettier.
+        player.gameObject.SetActive(false);
         GameEvents.ExitLevel(doorDirection);
+    }
+
+    public Vector2Int GetDoorDirection()
+    {
+        return doorDirection;
     }
 }

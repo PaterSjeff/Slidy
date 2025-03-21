@@ -7,16 +7,14 @@ public class Room : MonoBehaviour
 {
     public Vector2Int Coords { get; set; }
     
-    private Dictionary<Vector2Int, Transform> _entryPoints = new Dictionary<Vector2Int, Transform>();
-    
+    private Dictionary<Vector2Int, LevelDoor> _entryPoints = new Dictionary<Vector2Int, LevelDoor>();
     
     private Dictionary<Vector2Int, Interactable> _interactions = new Dictionary<Vector2Int, Interactable>();
     [SerializeField] private List<Interactable> _interactionList = new List<Interactable>();
 
     private GridManager _gridManager;
 
-    [ShowNonSerializedField] private PlayerSpawner _entrance;
-    [ShowNonSerializedField] private Interactable _exit;
+    [SerializeField] private Transform _cameraTarget;
 
     public void Initialize(GridManager gridManager)
     {
@@ -46,10 +44,21 @@ public class Room : MonoBehaviour
         _interactionList.Add(obj);
     }
 
-    public Player SpawnPlayer(Player player, Vector2Int spawnCoords)
+    public void SpawnPlayer(Player player, Vector2Int spawnCoords)
     {
-        var temp = _entrance.SpawnPlayer(player);
-        return temp;
+        if (!_entryPoints.TryGetValue(spawnCoords, out var entryPoint))
+        {
+            Debug.LogError($"No entry point for {spawnCoords}");
+            return;
+        }
+        
+        entryPoint.SpawnPlayer(player);
+    }
+
+    public void SpawnNewPlayer(Player player)
+    {
+        //TODO we need to remember where we came from.
+        SpawnPlayer(player, Vector2Int.up);
     }
 
     [Button]
@@ -64,11 +73,15 @@ public class Room : MonoBehaviour
             if (!interactableObj.GetIsInteractable()) { continue; }
             _interactionList.Add(interactableObj);
 
-            if (interactableObj.CompareTag("Entrance"))
+            if (interactableObj.TryGetComponent(out LevelDoor levelDoor))
             {
-                _entrance = interactableObj.GetComponent<PlayerSpawner>();
+                _entryPoints.Add(levelDoor.GetDoorDirection(), levelDoor);
             }
-            if (interactableObj.CompareTag("Exit")) { _exit = interactableObj; }
         }
+    }
+
+    public Transform GetGameraTarget()
+    {
+        return _cameraTarget;
     }
 }

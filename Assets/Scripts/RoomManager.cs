@@ -23,6 +23,7 @@ public class RoomManager : MonoBehaviour
     private const int MAX_LOADED_ROOMS = 5;
 
     private GridManager _gridManager;
+    private CameraController _cameraController;
     
     public List<RoomData> _roomData = new List<RoomData>();
     
@@ -44,17 +45,18 @@ public class RoomManager : MonoBehaviour
         LoadRoom(exitDirection);
     }
 
-    public void Initialize(GridManager gridManager)
+    public void Initialize(GridManager gridManager, Player player)
     {
         _gridManager = gridManager;
         PopulateAllRooms();
         LoadInitialRoom(new Vector2Int(0, 0));
+        
+        _player = player;
     }
 
-    public Player SpawnPlayer(Player player)
+    public void SpawnNewPlayer(Player player)
     {
-        //var temp = _currentRoom.SpawnPlayer(player);
-        //return temp;
+        _currentRoom.SpawnNewPlayer(player);
     }
     
     private void PopulateAllRooms()
@@ -75,7 +77,7 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public void TeleportPlayer(Vector2 directionOffset)
+    public void TeleportPlayer(Vector2Int directionOffset)
     {
         Vector2Int nextRoomCoords = _currentRoomCoords + new Vector2Int((int)directionOffset.x, (int)directionOffset.y);
 
@@ -107,6 +109,8 @@ public class RoomManager : MonoBehaviour
             _currentRoom.gameObject.SetActive(false);
             _inactiveRooms.Enqueue(_currentRoom);
         }
+        
+        _cameraController.OnRoomSwitched(newRoom);
 
         _currentRoom = newRoom;
         _currentRoomCoords = newRoom.Coords;
@@ -167,13 +171,12 @@ public class RoomManager : MonoBehaviour
     {
         Vector2Int newCoords = _currentRoomCoords + exitDirection;
         
-        if (!_allRooms.ContainsKey(newCoords))
+        if (!_allRooms.TryGetValue(newCoords, out var newRoom))
         {
             Debug.LogWarning($"No room exists at {newCoords}");
             return;
         }
 
-        Room newRoom = _allRooms[newCoords];
         SwitchToRoom(newRoom, exitDirection);
         ManageRoomLoading();
     }
@@ -191,6 +194,11 @@ public class RoomManager : MonoBehaviour
         if (direction == Vector2.right) return "WestEntry";
         if (direction == Vector2.left) return "EastEntry";
         return "CenterEntry"; // Fallback
+    }
+
+    public Room GetCurrentRoom()
+    {
+        return _currentRoom;
     }
 
     [Button]
