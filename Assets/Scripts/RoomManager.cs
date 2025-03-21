@@ -187,15 +187,6 @@ public class RoomManager : MonoBehaviour
         return new Vector3(coords.x * roomOffset, 0, coords.y * roomOffset);
     }
 
-    private string GetEntryPointName(Vector2 direction)
-    {
-        if (direction == Vector2.up) return "SouthEntry";
-        if (direction == Vector2.down) return "NorthEntry";
-        if (direction == Vector2.right) return "WestEntry";
-        if (direction == Vector2.left) return "EastEntry";
-        return "CenterEntry"; // Fallback
-    }
-
     public Room GetCurrentRoom()
     {
         return _currentRoom;

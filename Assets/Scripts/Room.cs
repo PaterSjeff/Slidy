@@ -6,8 +6,11 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public Vector2Int Coords { get; set; }
+
+    [SerializeField] private Transform _roomLayout;
     
-    private Dictionary<Vector2Int, LevelDoor> _entryPoints = new Dictionary<Vector2Int, LevelDoor>();
+    [SerializeField] private List<DoorData> _entryPoints = new List<DoorData>();
+    private Dictionary<Vector2Int, LevelDoor> _entryPointsDic = new Dictionary<Vector2Int, LevelDoor>();
     
     private Dictionary<Vector2Int, Interactable> _interactions = new Dictionary<Vector2Int, Interactable>();
     [SerializeField] private List<Interactable> _interactionList = new List<Interactable>();
@@ -22,6 +25,16 @@ public class Room : MonoBehaviour
         
         GameEvents.OnObjectDestroyed += HandleObjectDestroyed;
         GameEvents.OnObjectSpawned += HandleObjectSpawned;
+
+        SetInteractionsIntoDictionary();
+    }
+
+    private void SetInteractionsIntoDictionary()
+    {
+        foreach (var doorData in _entryPoints)
+        {
+            _entryPointsDic.Add(doorData._doorCoordinate, doorData._door);
+        }
     }
 
     private void OnDisable()
@@ -46,7 +59,9 @@ public class Room : MonoBehaviour
 
     public void SpawnPlayer(Player player, Vector2Int spawnCoords)
     {
-        if (!_entryPoints.TryGetValue(spawnCoords, out var entryPoint))
+        Debug.Log($"Spawning player {spawnCoords}");
+        
+        if (!_entryPointsDic.TryGetValue(spawnCoords, out var entryPoint))
         {
             Debug.LogError($"No entry point for {spawnCoords}");
             return;
@@ -67,7 +82,7 @@ public class Room : MonoBehaviour
         _interactionList.Clear();
         _entryPoints.Clear();
         
-        foreach (Transform child in transform)
+        foreach (Transform child in _roomLayout)
         {
             if (!child.TryGetComponent<Interactable>(out var interactableObj)) { continue; }
             if (!interactableObj.GetIsInteractable()) { continue; }
@@ -75,7 +90,11 @@ public class Room : MonoBehaviour
 
             if (interactableObj.TryGetComponent(out LevelDoor levelDoor))
             {
-                _entryPoints.Add(levelDoor.GetDoorDirection(), levelDoor);
+                var doorData = new DoorData();
+                doorData._doorCoordinate = levelDoor.GetDoorDirection();
+                doorData._door = levelDoor;
+                _entryPoints.Add(doorData);
+                Debug.Log($"{levelDoor.GetDoorDirection()} has been spawned");
             }
         }
     }

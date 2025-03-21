@@ -17,9 +17,10 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         _gridManager.Initialize();
-        SpawnPlayer();
         _roomManager.Initialize(_gridManager, _player);
         _cameraController.Initialize(_roomManager);
+        
+        SpawnPlayer();
     }
 
     private void SpawnPlayer()
