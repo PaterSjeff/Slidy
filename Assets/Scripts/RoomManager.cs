@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+
 using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
@@ -13,7 +14,7 @@ public class RoomManager : MonoBehaviour
     //Current Room
     private Vector2Int _currentRoomCoords;
     private Room _currentRoom;
-
+    
     //Room tracking
     private Dictionary<Vector2Int, Room> _allRooms = new Dictionary<Vector2Int, Room>();
     private Queue<Room> _inactiveRooms = new Queue<Room>();
@@ -22,9 +23,10 @@ public class RoomManager : MonoBehaviour
     private const int MAX_LOADED_ROOMS = 5;
 
     private GridManager _gridManager;
-
+    private CameraController _cameraController;
+    
     public List<RoomData> _roomData = new List<RoomData>();
-
+    
     private Player _player;
 
     private void OnEnable()
@@ -35,7 +37,7 @@ public class RoomManager : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.OnExitLevel -= OnExitLevel;
-
+        
     }
 
     private void OnExitLevel(Vector2Int exitDirection)
@@ -43,19 +45,20 @@ public class RoomManager : MonoBehaviour
         LoadRoom(exitDirection);
     }
 
-    public void Initialize(GridManager gridManager)
+    public void Initialize(GridManager gridManager, Player player)
     {
         _gridManager = gridManager;
         PopulateAllRooms();
         LoadInitialRoom(new Vector2Int(0, 0));
+        
+        _player = player;
     }
 
-    public Player SpawnPlayer(Player player)
+    public void SpawnNewPlayer(Player player)
     {
-        var temp = _currentRoom.SpawnPlayer(player);
-        return temp;
+        _currentRoom.SpawnNewPlayer(player);
     }
-
+    
     private void PopulateAllRooms()
     {
         _allRooms = new Dictionary<Vector2Int, Room>();
@@ -68,13 +71,13 @@ public class RoomManager : MonoBehaviour
                 newRoom.transform.position = ConvertRoomCoordsToWorldCoords(data._roomCoordinate);
                 newRoom.Initialize(_gridManager);
                 newRoom.gameObject.SetActive(false); // Start as inactive
-
+                
                 _allRooms[data._roomCoordinate] = newRoom;
             }
         }
     }
 
-    public void TeleportPlayer(Vector2 directionOffset)
+    public void TeleportPlayer(Vector2Int directionOffset)
     {
         Vector2Int nextRoomCoords = _currentRoomCoords + new Vector2Int((int)directionOffset.x, (int)directionOffset.y);
 
@@ -95,7 +98,7 @@ public class RoomManager : MonoBehaviour
         {
             newRoom.gameObject.SetActive(true);
         }
-
+        
         // Position player at opposite entry point
         Vector2Int oppositeDirection = -directionOffset;
         newRoom.SpawnPlayer(_player, oppositeDirection);
@@ -106,6 +109,8 @@ public class RoomManager : MonoBehaviour
             _currentRoom.gameObject.SetActive(false);
             _inactiveRooms.Enqueue(_currentRoom);
         }
+        
+        _cameraController.OnRoomSwitched(newRoom);
 
         _currentRoom = newRoom;
         _currentRoomCoords = newRoom.Coords;
@@ -115,12 +120,12 @@ public class RoomManager : MonoBehaviour
     {
         // Unload rooms beyond our loading radius
         List<Vector2Int> roomsToUnload = new List<Vector2Int>();
-
+        
         foreach (var roomEntry in _allRooms)
         {
-            int distance = Mathf.Abs(roomEntry.Key.x - _currentRoomCoords.x) +
-                           Mathf.Abs(roomEntry.Key.y - _currentRoomCoords.y);
-
+            int distance = Mathf.Abs(roomEntry.Key.x - _currentRoomCoords.x) + 
+                          Mathf.Abs(roomEntry.Key.y - _currentRoomCoords.y);
+            
             if (distance > 2 && roomEntry.Value != _currentRoom)
             {
                 roomEntry.Value.gameObject.SetActive(false);
@@ -141,7 +146,7 @@ public class RoomManager : MonoBehaviour
             Destroy(roomToDestroy.gameObject);
         }
     }
-
+    
     private void LoadInitialRoom(Vector2Int coords)
     {
         if (!_allRooms.ContainsKey(coords))
@@ -153,7 +158,7 @@ public class RoomManager : MonoBehaviour
         _currentRoom = _allRooms[coords];
         _currentRoomCoords = coords;
         _currentRoom.gameObject.SetActive(true);
-
+        
         // Set initial player position
         Transform entryPoint = _currentRoom.transform.Find("CenterEntry");
         if (entryPoint != null)
@@ -165,14 +170,13 @@ public class RoomManager : MonoBehaviour
     private void LoadRoom(Vector2Int exitDirection)
     {
         Vector2Int newCoords = _currentRoomCoords + exitDirection;
-
-        if (!_allRooms.ContainsKey(newCoords))
+        
+        if (!_allRooms.TryGetValue(newCoords, out var newRoom))
         {
             Debug.LogWarning($"No room exists at {newCoords}");
             return;
         }
 
-        Room newRoom = _allRooms[newCoords];
         SwitchToRoom(newRoom, exitDirection);
         ManageRoomLoading();
     }
@@ -183,13 +187,9 @@ public class RoomManager : MonoBehaviour
         return new Vector3(coords.x * roomOffset, 0, coords.y * roomOffset);
     }
 
-    private string GetEntryPointName(Vector2 direction)
+    public Room GetCurrentRoom()
     {
-        if (direction == Vector2.up) return "SouthEntry";
-        if (direction == Vector2.down) return "NorthEntry";
-        if (direction == Vector2.right) return "WestEntry";
-        if (direction == Vector2.left) return "EastEntry";
-        return "CenterEntry"; // Fallback
+        return _currentRoom;
     }
 
     [Button]

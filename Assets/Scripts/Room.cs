@@ -7,19 +7,34 @@ public class Room : MonoBehaviour
 {
     public Vector2Int Coords { get; set; }
 
-    private Dictionary<Vector2Int, LevelDoor> _entryPoints = new Dictionary<Vector2Int, LevelDoor>();
+    [SerializeField] private Transform _roomLayout;
+    
+    [SerializeField] private List<DoorData> _entryPoints = new List<DoorData>();
+    private Dictionary<Vector2Int, LevelDoor> _entryPointsDic = new Dictionary<Vector2Int, LevelDoor>();
+    
     private Dictionary<Vector2Int, Interactable> _interactions = new Dictionary<Vector2Int, Interactable>();
-
     [SerializeField] private List<Interactable> _interactionList = new List<Interactable>();
 
     private GridManager _gridManager;
 
+    [SerializeField] private Transform _cameraTarget;
+
     public void Initialize(GridManager gridManager)
     {
         _gridManager = gridManager;
-
+        
         GameEvents.OnObjectDestroyed += HandleObjectDestroyed;
         GameEvents.OnObjectSpawned += HandleObjectSpawned;
+
+        SetInteractionsIntoDictionary();
+    }
+
+    private void SetInteractionsIntoDictionary()
+    {
+        foreach (var doorData in _entryPoints)
+        {
+            _entryPointsDic.Add(doorData._doorCoordinate, doorData._door);
+        }
     }
 
     private void OnDisable()
@@ -42,19 +57,23 @@ public class Room : MonoBehaviour
         _interactionList.Add(obj);
     }
 
-    public Player SpawnPlayer(Player player, Vector2Int spawnCoords)
+    public void SpawnPlayer(Player player, Vector2Int spawnCoords)
     {
-        Player tempPlayer = null;
-        if (_entryPoints.TryGetValue(spawnCoords, out var entryPoint))
-        {
-            tempPlayer = entryPoint.SpawnPlayer(player);
-        }
-        else
+        Debug.Log($"Spawning player {spawnCoords}");
+        
+        if (!_entryPointsDic.TryGetValue(spawnCoords, out var entryPoint))
         {
             Debug.LogError($"No entry point for {spawnCoords}");
+            return;
         }
+        
+        entryPoint.SpawnPlayer(player);
+    }
 
-        return tempPlayer;
+    public void SpawnNewPlayer(Player player)
+    {
+        //TODO we need to remember where we came from.
+        SpawnPlayer(player, Vector2Int.up);
     }
 
     [Button]
@@ -62,8 +81,8 @@ public class Room : MonoBehaviour
     {
         _interactionList.Clear();
         _entryPoints.Clear();
-
-        foreach (Transform child in transform)
+        
+        foreach (Transform child in _roomLayout)
         {
             if (!child.TryGetComponent<Interactable>(out var interactableObj)) { continue; }
             if (!interactableObj.GetIsInteractable()) { continue; }
@@ -71,9 +90,17 @@ public class Room : MonoBehaviour
 
             if (interactableObj.TryGetComponent(out LevelDoor levelDoor))
             {
-                var coords = levelDoor.GetEntryPointCoord();
-                _entryPoints.Add(coords, levelDoor);
+                var doorData = new DoorData();
+                doorData._doorCoordinate = levelDoor.GetDoorDirection();
+                doorData._door = levelDoor;
+                _entryPoints.Add(doorData);
+                Debug.Log($"{levelDoor.GetDoorDirection()} has been spawned");
             }
         }
+    }
+
+    public Transform GetGameraTarget()
+    {
+        return _cameraTarget;
     }
 }
