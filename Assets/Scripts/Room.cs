@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using NaughtyAttributes;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class Room : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class Room : MonoBehaviour
     private GridManager _gridManager;
 
     [SerializeField] private Transform _cameraTarget;
+    [SerializeField] private CinemachineCamera _camera;
 
     public void Initialize(GridManager gridManager)
     {
@@ -102,5 +104,10 @@ public class Room : MonoBehaviour
     public Transform GetGameraTarget()
     {
         return _cameraTarget;
+    }
+
+    public CinemachineCamera GetCamera()
+    {
+        return _camera;
     }
 }

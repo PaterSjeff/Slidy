@@ -22,7 +22,7 @@ public class RoomManager : MonoBehaviour
     private Queue<Room> _inactiveRooms = new Queue<Room>();
 
     //maximum of rooms loaded
-    private const int MAX_LOADED_ROOMS = 5;
+    private const int MAX_LOADED_DISTANCE = 1;
 
     private GridManager _gridManager;
 
@@ -50,6 +50,7 @@ public class RoomManager : MonoBehaviour
         _gridManager = gridManager;
         PopulateAllRooms();
         LoadInitialRoom(new Vector2Int(0, 0));
+        ManageRoomLoading();
 
         _player = player;
     }
@@ -73,6 +74,11 @@ public class RoomManager : MonoBehaviour
                 _allRooms[data._roomCoordinate] = data._roomPrefab;
             }
         }
+
+        foreach (var VARIABLE in _allRooms)
+        {
+            Debug.LogWarning($"Room {VARIABLE.Key} has room {VARIABLE.Value}");
+        }
     }
 
     private void SwitchToRoom(Room newRoom, Vector2Int directionOffset)
@@ -84,11 +90,11 @@ public class RoomManager : MonoBehaviour
         newRoom.SpawnPlayer(_player, oppositeDirection);
 
         // Deactivate current room
-        if (_currentRoom != null)
+        /*if (_currentRoom != null)
         {
             _currentRoom.gameObject.SetActive(false);
             //_inactiveRooms.Enqueue(_currentRoom);
-        }
+        }*/
 
         _currentRoom = newRoom;
         //_currentRoomCoords = newRoom.Coords;
@@ -98,32 +104,20 @@ public class RoomManager : MonoBehaviour
 
     private void ManageRoomLoading()
     {
-        // Unload rooms beyond our loading radius
-        List<Vector2Int> roomsToUnload = new List<Vector2Int>();
-
+        // Deactivate rooms beyond our loading radius
         foreach (var roomEntry in _allRooms)
         {
             int distance = Mathf.Abs(roomEntry.Key.x - _currentRoomCoords.x) +
                            Mathf.Abs(roomEntry.Key.y - _currentRoomCoords.y);
 
-            if (distance > 2 && roomEntry.Value != _currentRoom)
+            if (distance > MAX_LOADED_DISTANCE && roomEntry.Value != _currentRoom)
             {
                 roomEntry.Value.gameObject.SetActive(false);
-                _inactiveRooms.Enqueue(roomEntry.Value);
-                roomsToUnload.Add(roomEntry.Key);
             }
-        }
-
-        foreach (var key in roomsToUnload)
-        {
-            _allRooms.Remove(key);
-        }
-
-        // Ensure we don't exceed our memory budget
-        while (_inactiveRooms.Count > MAX_LOADED_ROOMS)
-        {
-            Room roomToDestroy = _inactiveRooms.Dequeue();
-            Destroy(roomToDestroy.gameObject);
+            else if (roomEntry.Value != _currentRoom)
+            {
+                roomEntry.Value.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -149,8 +143,13 @@ public class RoomManager : MonoBehaviour
 
     private void LoadRoom(Vector2Int exitDirection)
     {
-        Debug.Log($"Loading room {exitDirection}");
         Vector2Int newCoords = _currentRoomCoords + exitDirection;
+        Debug.Log($"Loading room {newCoords}");
+
+        foreach (var VARIABLE in _allRooms)
+        {
+            Debug.LogWarning($"Room {VARIABLE.Key} has already been loaded");
+        }
 
         if (!_allRooms.TryGetValue(newCoords, out var newRoom))
         {
@@ -161,7 +160,7 @@ public class RoomManager : MonoBehaviour
         _currentRoomCoords = newCoords;
 
         SwitchToRoom(newRoom, exitDirection);
-        //ManageRoomLoading();
+        ManageRoomLoading();
     }
 
     private Vector3 ConvertRoomCoordsToWorldCoords(Vector2Int coords)

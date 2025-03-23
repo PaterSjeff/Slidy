@@ -31,17 +31,18 @@ public class CameraController : MonoBehaviour
 
     private void EnableRoomCamera(Room room)
     {
+        Debug.LogWarning($"EnableRoomCamera for {room.name}");
         // Disable current camera if exists
         if (_currentCamera != null)
         {
-            _currentCamera.enabled = false;
+            _currentCamera.gameObject.SetActive(false);
         }
 
         // Find and enable new camera
-        CinemachineCamera roomCamera = room.GetComponentInChildren<CinemachineCamera>();
+        CinemachineCamera roomCamera = room.GetCamera();
         if (roomCamera != null)
         {
-            roomCamera.enabled = true;
+            roomCamera.gameObject.SetActive(true);
             _currentCamera = roomCamera;
         }
         else
