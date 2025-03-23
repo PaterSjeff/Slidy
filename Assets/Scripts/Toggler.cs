@@ -9,7 +9,7 @@ public class Toggler : InteractableListener
     [SerializeField] [CanBeNull] private string _openChestClip;
     [SerializeField] [CanBeNull] private string _closeChestClip;
 
-    [SerializeField] private bool _useOnce = false;
+    [SerializeField] protected bool _useOnce = false;
 
     protected bool _usedOnce = false;
     protected bool _isOpen = false;

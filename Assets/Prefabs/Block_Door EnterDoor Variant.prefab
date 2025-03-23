@@ -214,8 +214,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  doorDirection: {x: 0, y: 0}
   _entrancePoint: {fileID: 5726847043727562025}
   _exitPoint: {fileID: 5303692994206162690}
+  _leaveCollider: {fileID: 0}
 --- !u!114 &1060171713346670321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +225,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8264126765178085011}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7a61baa92f52ef41a77aaa1af1d6935, type: 3}
   m_Name: 

@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 553927658583772196}
   - component: {fileID: 619132711001276248}
-  - component: {fileID: 7227093531229682823}
+  - component: {fileID: 7415445798275414318}
   m_Layer: 7
   m_Name: ExitCollider
   m_TagString: Untagged
@@ -116,7 +116,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &7227093531229682823
+--- !u!114 &7415445798275414318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,13 +125,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8166737821287969291}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54da857b800fb9342932edaaa0c969ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e0860881abc6d2448206ceaadab4c74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isSolid: 1
+  _isSolid: 0
   _damagable: {fileID: 0}
   _isInteractable: 1
-  _exitDirection: {x: 0, y: 0}
 --- !u!1001 &2990111715396327784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -257,7 +256,7 @@ MonoBehaviour:
   _animation: {fileID: 1533614059791594460}
   _openChestClip: Door_Open
   _closeChestClip: Door_Close
-  _useOnce: 0
+  _useOnce: 1
   _onOpen:
     m_PersistentCalls:
       m_Calls:
@@ -288,7 +287,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  doorDirection: {x: 0, y: 0}
+  _doorDirection: {x: 0, y: 0}
   _entrancePoint: {fileID: 5726847043727562025}
   _exitPoint: {fileID: 5303692994206162690}
-  _leaveCollider: {fileID: 7227093531229682823}
+  _leaveCollider: {fileID: 7415445798275414318}

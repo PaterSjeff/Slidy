@@ -8,10 +8,10 @@ public class Room : MonoBehaviour
     public Vector2Int Coords { get; set; }
 
     [SerializeField] private Transform _roomLayout;
-    
+
     [SerializeField] private List<DoorData> _entryPoints = new List<DoorData>();
     private Dictionary<Vector2Int, LevelDoor> _entryPointsDic = new Dictionary<Vector2Int, LevelDoor>();
-    
+
     private Dictionary<Vector2Int, Interactable> _interactions = new Dictionary<Vector2Int, Interactable>();
     [SerializeField] private List<Interactable> _interactionList = new List<Interactable>();
 
@@ -22,7 +22,7 @@ public class Room : MonoBehaviour
     public void Initialize(GridManager gridManager)
     {
         _gridManager = gridManager;
-        
+
         GameEvents.OnObjectDestroyed += HandleObjectDestroyed;
         GameEvents.OnObjectSpawned += HandleObjectSpawned;
 
@@ -60,20 +60,20 @@ public class Room : MonoBehaviour
     public void SpawnPlayer(Player player, Vector2Int spawnCoords)
     {
         Debug.Log($"Spawning player {spawnCoords}");
-        
+
         if (!_entryPointsDic.TryGetValue(spawnCoords, out var entryPoint))
         {
             Debug.LogError($"No entry point for {spawnCoords}");
             return;
         }
-        
+
         entryPoint.SpawnPlayer(player);
     }
 
     public void SpawnNewPlayer(Player player)
     {
         //TODO we need to remember where we came from.
-        SpawnPlayer(player, Vector2Int.up);
+        SpawnPlayer(player, Vector2Int.down);
     }
 
     [Button]
@@ -81,7 +81,7 @@ public class Room : MonoBehaviour
     {
         _interactionList.Clear();
         _entryPoints.Clear();
-        
+
         foreach (Transform child in _roomLayout)
         {
             if (!child.TryGetComponent<Interactable>(out var interactableObj)) { continue; }

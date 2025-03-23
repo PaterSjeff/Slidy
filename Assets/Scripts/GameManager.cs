@@ -13,21 +13,26 @@ public class GameManager : MonoBehaviour
     [SerializeField] Player _playerPrefab;
     [SerializeField] Transform _playerSpawnPoint;
 
-    [CanBeNull] private Player _player;
+    [SerializeField] private Player _player;
     void Awake()
     {
         _gridManager.Initialize();
         _roomManager.Initialize(_gridManager, _player);
         _cameraController.Initialize(_roomManager);
-        
+
         SpawnPlayer();
     }
 
     private void SpawnPlayer()
     {
-        _player = Instantiate(_playerPrefab, _playerSpawnPoint.position, Quaternion.identity);
-        _player?.gameObject.SetActive(false);
-        _player?.Initialize(_gridManager);
+        if (_player == null)
+        {
+            Debug.LogWarning("No player assigned to GameManager");
+            return;
+        }
+
+        _player.gameObject.SetActive(false);
+        _player.Initialize(_gridManager);
         _roomManager.SpawnNewPlayer(_player);
     }
 }
