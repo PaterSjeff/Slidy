@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GridManager _gridManager;
     [SerializeField] private RoomManager _roomManager;
     [SerializeField] private CameraController _cameraController;
-
+    [SerializeField] private SaveManager _saveManager;
+    
     [SerializeField] Player _playerPrefab;
     [SerializeField] Transform _playerSpawnPoint;
 
@@ -18,8 +19,12 @@ public class GameManager : MonoBehaviour
     {
         _gridManager.Initialize();
         _roomManager.Initialize(_gridManager, _player);
+        
+        _saveManager.Initialize(_roomManager, _player);
+        _saveManager.LoadGame();
+        
         _cameraController.Initialize(_roomManager);
-
+        
         SpawnPlayer();
     }
 

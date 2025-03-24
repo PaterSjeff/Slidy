@@ -38,6 +38,16 @@ public class Inventory : MonoBehaviour
     {
         
     }
+
+    public int GetCoins()
+    {
+        return _coins;
+    }
+
+    public void SetCoins(int coins)
+    {
+        _coins = coins;
+    }
     
     public Item GetCurrentItem(){ return _currentItem; }
 }

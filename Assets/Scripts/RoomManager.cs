@@ -49,7 +49,7 @@ public class RoomManager : MonoBehaviour
     {
         _gridManager = gridManager;
         PopulateAllRooms();
-        LoadInitialRoom(new Vector2Int(0, 0));
+        //LoadInitialRoom(new Vector2Int(0, 0));
         ManageRoomLoading();
 
         _player = player;
@@ -172,6 +172,18 @@ public class RoomManager : MonoBehaviour
     public Room GetCurrentRoom()
     {
         return _currentRoom;
+    }
+
+    public Vector2Int GetCurrentRoomCoords()
+    {
+        return _currentRoomCoords;
+    }
+
+    public void SetCurrentRoomCoords(Vector2Int coords)
+    {
+        _currentRoomCoords = coords;
+        LoadInitialRoom(coords);
+        ManageRoomLoading();
     }
 
     [Button]
