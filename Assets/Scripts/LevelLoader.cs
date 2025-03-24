@@ -19,37 +19,23 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private GameObject _coinPrefab;
     [SerializeField] private GameObject _swordPrefab;
     [SerializeField] private GameObject _playerPrefab;
-    
+
     [SerializeField] private List<Interactable> _interactablesPrefabs = new List<Interactable>();
 
-    private Dictionary<string, GameObject> prefabMap; // Maps type names to prefabs
-    private Dictionary<ObjectType, Interactable> _objectMap;
-    private Dictionary<string, GameObject> namedObjects; // Tracks objects with names for connections
+    private Dictionary<ObjectType, Interactable> _prefabMap;
+    private Dictionary<ObjectType, GameObject> namedObjects; // Tracks objects with names for connections
 
     [SerializeField] private GameObject _levelContainer;
 
     [Button]
     private void StartLoadLevel()
     {
-        // Initialize prefab mapping
-        prefabMap = new Dictionary<string, GameObject>
-        {
-            { "Wall", _wallPrefab },
-            { "Door", _doorPrefab },
-            { "Lever", _leverPrefab },
-            { "Spike Floor", _spikeFloorPrefab },
-            { "Floor Button", _floorButtonPrefab },
-            { "Enemy", _enemyPrefab },
-            { "Coin", _coinPrefab },
-            { "Sword", _swordPrefab }
-        };
-
         foreach (var interactable in _interactablesPrefabs)
         {
-            _objectMap.Add(interactable.GetObjectType(), interactable);
+            _prefabMap.Add(interactable.GetObjectType(), interactable);
         }
 
-        namedObjects = new Dictionary<string, GameObject>();
+        namedObjects = new Dictionary<ObjectType, GameObject>();
         LoadLevel();
     }
 
@@ -61,7 +47,7 @@ public class LevelLoader : MonoBehaviour
             Debug.LogError("No level JSON file assigned!");
             return;
         }
-        
+
         _levelContainer.transform.position = Vector3.zero;
 
         // Clear the namedObjects dictionary to avoid stale references
@@ -73,34 +59,33 @@ public class LevelLoader : MonoBehaviour
         // Spawn level objects inside the level container
         foreach (LevelObject obj in levelData.objects)
         {
-            if (!prefabMap.ContainsKey(obj.type))
+            if (!_prefabMap.ContainsKey(obj.objectType))
             {
                 Debug.LogWarning($"No prefab found for type: {obj.type}");
                 continue;
             }
 
             Vector3 pos = new Vector3(obj.position[0] - 1, 0, obj.position[1] - 1);
-            //GameObject instance = Instantiate(prefabMap[obj.type], pos, Quaternion.identity, _levelContainer.transform);
-            GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefabMap[obj.type], _levelContainer.transform);
+            GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(_prefabMap[obj.objectType], _levelContainer.transform);
             instance.transform.position = pos;
             //TODO need to do rotation for some things.
 
             // Store named objects for connections
             if (!string.IsNullOrEmpty(obj.name))
             {
-                namedObjects[obj.name] = instance;
+                namedObjects[obj.objectType] = instance;
             }
 
             // Configure the object (e.g., set properties)
             ConfigureObject(instance, obj);
         }
 
-        // Set up connections after all objects are spawned
+        //Set up connections after all objects are spawned
         foreach (LevelObject obj in levelData.objects)
         {
             if (obj.connections != null && obj.connections.Length > 0)
             {
-                GameObject source = namedObjects.ContainsKey(obj.name) ? namedObjects[obj.name] : null;
+                GameObject source = namedObjects.ContainsKey(obj.objectType) ? namedObjects[obj.objectType] : null;
                 if (source != null)
                 {
                     SetupConnections(source, obj.connections, namedObjects);
@@ -112,41 +97,35 @@ public class LevelLoader : MonoBehaviour
     void ConfigureObject(GameObject instance, LevelObject obj)
     {
         // Add components and configure based on type
-        switch (obj.type)
+        switch (obj.objectType)
         {
-            case "Wall":
-                // No additional configuration needed
-                break;
-
-            case "Door":
-                Toggler door = instance.AddComponent<Toggler>();
+            case ObjectType.Door:
+                Toggler door = instance.GetComponent<Toggler>();
                 door.SetState(obj.startingState);
                 break;
 
-            case "Lever":
-                Toggler lever = instance.AddComponent<Toggler>();
+            case ObjectType.BlockLever:
+                Toggler lever = instance.GetComponent<Toggler>();
                 lever.SetState(obj.startingState);
                 break;
 
-            case "Spike Floor":
-                Toggler spike = instance.AddComponent<Toggler>();
+            case ObjectType.TileButton:
+                break;
+
+            case ObjectType.TileSpike:
+                var spike = instance.GetComponent<Toggler>();
                 spike.SetState(obj.startingState);
                 break;
 
-            case "Floor Button":
-                Toggler button = instance.AddComponent<Toggler>();
+            case ObjectType.Enemy:
                 break;
 
-            case "Enemy":
-                Damage enemy = instance.AddComponent<Damage>();
+            case ObjectType.Coin:
+
                 break;
 
-            case "Coin":
-                Pickup coin = instance.AddComponent<Pickup>();
-                break;
+            case ObjectType.Sword:
 
-            case "Sword":
-                Pickup sword = instance.AddComponent<Pickup>();
                 break;
 
             default:
@@ -155,7 +134,7 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
-    void SetupConnections(GameObject sourceObj, Connection[] connections, Dictionary<string, GameObject> namedObjects)
+    void SetupConnections(GameObject sourceObj, Connection[] connections, Dictionary<ObjectType, GameObject> namedObjects)
     {
         foreach (Connection conn in connections)
         {
@@ -209,11 +188,12 @@ public class LevelObject
     public string name;
     public bool startingState;
     public Connection[] connections;
+    public ObjectType objectType;
 }
 
 [System.Serializable]
 public class Connection
 {
-    public string target;
+    public ObjectType target;
     public string action;
 }
