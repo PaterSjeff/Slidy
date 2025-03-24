@@ -132,13 +132,6 @@ public class RoomManager : MonoBehaviour
         _currentRoom = _allRooms[coords];
         _currentRoomCoords = coords;
         _currentRoom.gameObject.SetActive(true);
-
-        // Set initial player position
-        Transform entryPoint = _currentRoom.transform.Find("CenterEntry");
-        if (entryPoint != null)
-        {
-            //_playerTransform.position = entryPoint.position;
-        }
     }
 
     private void LoadRoom(Vector2Int exitDirection)
