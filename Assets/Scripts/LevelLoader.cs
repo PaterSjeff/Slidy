@@ -19,8 +19,11 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private GameObject _coinPrefab;
     [SerializeField] private GameObject _swordPrefab;
     [SerializeField] private GameObject _playerPrefab;
+    
+    [SerializeField] private List<Interactable> _interactablesPrefabs = new List<Interactable>();
 
     private Dictionary<string, GameObject> prefabMap; // Maps type names to prefabs
+    private Dictionary<ObjectType, Interactable> _objectMap;
     private Dictionary<string, GameObject> namedObjects; // Tracks objects with names for connections
 
     [SerializeField] private GameObject _levelContainer;
@@ -40,6 +43,11 @@ public class LevelLoader : MonoBehaviour
             { "Coin", _coinPrefab },
             { "Sword", _swordPrefab }
         };
+
+        foreach (var interactable in _interactablesPrefabs)
+        {
+            _objectMap.Add(interactable.GetObjectType(), interactable);
+        }
 
         namedObjects = new Dictionary<string, GameObject>();
         LoadLevel();
@@ -61,10 +69,6 @@ public class LevelLoader : MonoBehaviour
 
         // Deserialize JSON into LevelData
         LevelData levelData = JsonUtility.FromJson<LevelData>(_levelJsonFile.text);
-
-        // Spawn the player inside the level container
-        Vector3 playerPos = new Vector3(levelData.playerStart[0] - 1, 0, levelData.playerStart[1] - 1);
-        GameObject playerInstance = Instantiate(_playerPrefab, playerPos, Quaternion.identity, _levelContainer.transform);
 
         // Spawn level objects inside the level container
         foreach (LevelObject obj in levelData.objects)

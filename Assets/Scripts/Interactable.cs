@@ -2,10 +2,12 @@ using System;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 public class Interactable : MonoBehaviour
 {
-
+    [SerializeField] private ObjectType _objectType = ObjectType.Null;
     [CanBeNull] public Action<Player> OnInteract;
     [SerializeField] private bool _isSolid = false;
     [SerializeField] [CanBeNull] private Damagable _damagable = null;
@@ -34,4 +36,5 @@ public class Interactable : MonoBehaviour
     }
     
     public bool GetIsInteractable() { return _isInteractable; }
+    public ObjectType GetObjectType() { return _objectType; }
 }
