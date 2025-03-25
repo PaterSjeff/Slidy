@@ -8,6 +8,70 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[3]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[4]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[5]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[6]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[7]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[8]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[9]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[10]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[11]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[12]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[13]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[14]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 957679266317283832, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: '_tileVisualLookup.m_values.Array.data[15]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3621778568533399088, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
       propertyPath: m_Name
       value: Block_Lever Variant
@@ -91,6 +155,22 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1926988697340304912, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 8726366503760754550, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 4174489740552350314, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 2351454882234035129, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 3959549764099239413, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 2210373415323709979, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 7469911149961345806, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 5033681888007669493, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 5340687266496139151, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 2769588667852780172, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 3849380843626771898, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 6779426779996490265, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 4585633176405981285, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 3149748682863038214, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 1341403368663204848, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 8251107238713465534, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+    - {fileID: 6409696714019828000, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7263941066126564717, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
       insertIndex: -1
