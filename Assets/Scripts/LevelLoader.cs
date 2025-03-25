@@ -20,9 +20,9 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private GameObject _swordPrefab;
     [SerializeField] private GameObject _playerPrefab;
 
-    [SerializeField] private List<Interactable> _interactablesPrefabs = new List<Interactable>();
+    [SerializeField] private List<InteractableData> _interactablesPrefabs = new List<InteractableData>();
 
-    private Dictionary<ObjectType, Interactable> _prefabMap;
+    private Dictionary<ObjectType, GameObject> _prefabMap;
     private Dictionary<ObjectType, GameObject> namedObjects; // Tracks objects with names for connections
 
     [SerializeField] private GameObject _levelContainer;
@@ -30,9 +30,11 @@ public class LevelLoader : MonoBehaviour
     [Button]
     private void StartLoadLevel()
     {
+        _prefabMap = new Dictionary<ObjectType, GameObject>();
+        
         foreach (var interactable in _interactablesPrefabs)
         {
-            _prefabMap.Add(interactable.GetObjectType(), interactable);
+            _prefabMap.Add(interactable.objectType, interactable.interactableObject);
         }
 
         namedObjects = new Dictionary<ObjectType, GameObject>();

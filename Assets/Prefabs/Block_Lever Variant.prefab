@@ -13,6 +13,10 @@ PrefabInstance:
       value: Block_Lever Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5229696223997750773, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
+      propertyPath: _objectType
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5229696223997750773, guid: cd4154bf4ccaccc4d9c1f3d17509c6a8, type: 3}
       propertyPath: _isInteractable
       value: 1
       objectReference: {fileID: 0}

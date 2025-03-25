@@ -53,6 +53,10 @@ PrefabInstance:
       value: Tile_Spikes Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6754226317840946801, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
+      propertyPath: _objectType
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754226317840946801, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
       propertyPath: _isInteractable
       value: 1
       objectReference: {fileID: 0}

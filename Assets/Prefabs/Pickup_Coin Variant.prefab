@@ -114,6 +114,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pickup_Coin Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6754226317840946801, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
+      propertyPath: _objectType
+      value: 200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1195612510734652867, guid: 80ecb1c987b5cec4193a24eeeacd2ccd, type: 3}
@@ -161,6 +165,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactable: {fileID: 3858955221416670123}
   _pickupAmount: 1
+  _isCollectible: 1
   _onPickup:
     m_PersistentCalls:
       m_Calls: []
+  _pickupItem: {fileID: 0}
+  _pickupItemPrefab: {fileID: 0}
+  _itemType: 0
