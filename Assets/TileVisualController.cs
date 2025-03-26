@@ -8,8 +8,6 @@ using UnityEngine.Serialization;
 
 public class TileVisualController : MonoBehaviour
 {
-    public Vector2Int _gridPosition;
-    public GameObject[] _visualVariants;
     private GameObject _currentVisual;
     public LayerMask _wallLayer;
     public float _checkDistance = 1.0f;

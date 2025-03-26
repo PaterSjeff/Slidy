@@ -80,6 +80,7 @@ public class LevelLoader : MonoBehaviour
 
             // Configure the object (e.g., set properties)
             ConfigureObject(instance, obj);
+            ConfigureVisuals(instance, obj);
         }
 
         //Set up connections after all objects are spawned
@@ -96,14 +97,28 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
+    private void ConfigureVisuals(GameObject instance, LevelObject obj)
+    {
+        switch (obj.objectType)
+        {
+            case ObjectType.Wall:
+                var visualController = instance.GetComponent<TileVisualController>();
+                visualController.UpdateVisual();
+                break;
+        }
+    }
+
     void ConfigureObject(GameObject instance, LevelObject obj)
     {
         // Add components and configure based on type
         switch (obj.objectType)
         {
             case ObjectType.Door:
-                Toggler door = instance.GetComponent<Toggler>();
+                var door = instance.GetComponent<LevelDoor>();
                 door.SetState(obj.startingState);
+                var coords = door.GetDoorDirection();
+                Quaternion rotation = GetRotationBasedOnCoords(coords);
+                instance.transform.rotation = rotation;
                 break;
 
             case ObjectType.BlockLever:
@@ -134,6 +149,12 @@ public class LevelLoader : MonoBehaviour
                 Debug.LogWarning($"Unhandled object type: {obj.type}");
                 break;
         }
+    }
+
+    private Quaternion GetRotationBasedOnCoords(Vector2Int coords)
+    {
+        Quaternion rotation = Quaternion.Euler(0f, coords.x, 0f);
+        return rotation;
     }
 
     void SetupConnections(GameObject sourceObj, Connection[] connections, Dictionary<ObjectType, GameObject> namedObjects)
